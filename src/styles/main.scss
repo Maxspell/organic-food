@@ -1,5 +1,8 @@
 @use 'normalize';
 @use 'helpers';
+@use "../../node_modules/@glidejs/glide/src/assets/sass/glide.core" as glide-core;
+@use "../../node_modules/@glidejs/glide/src/assets/sass/glide.theme" as glide-theme;
+@use 'glide-custom';
 @use 'header';
 @use 'content';
 @use 'product-card';

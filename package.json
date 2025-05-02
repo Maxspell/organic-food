@@ -11,6 +11,7 @@
   "description": "",
   "dependencies": {
     "@fortawesome/fontawesome-free": "^6.7.2",
+    "@glidejs/glide": "^3.7.1",
     "gulp": "^5.0.0",
     "sass": "^1.87.0"
   },
