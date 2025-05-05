@@ -17,6 +17,36 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelector('header .mobile-menu .features .search').classList.toggle('expanded');
   })
 
+  new Glide('.sec5-cards', {
+    type: 'carousel',
+    startAt: 0,
+    perView: 1
+  }).mount();
+
+  const btnIdsToOpenModal = ['sec-8-card-1-btn', 'sec-8-card-2-btn'];
+  const generalModalWrapper = document.querySelector('.modals-wrapper');
+  const closeModalBtns = document.querySelectorAll('.modal-close-btn');
+
+  btnIdsToOpenModal.forEach((btnId) => {
+    const btnEl = document.getElementById(btnId);
+    const modalId = btnEl.getAttribute('data-modal-id');
+    const modalEl = document.getElementById(modalId);
+
+    btnEl.addEventListener('click', function() {
+      generalModalWrapper.classList.add('visible');
+      modalEl.classList.add('visible');
+      document.querySelector('body').classList.add('overflow');
+    });
+  })
+
+  closeModalBtns.forEach((closeBtn) => {
+    closeBtn.addEventListener('click', function() {
+      generalModalWrapper.classList.remove('visible');
+      this.parentElement.classList.remove('visible');
+      document.querySelector('body').classList.remove('overflow');
+    })
+  });
+
   const loadMoreProductCards = document.getElementById('load-more-cards');
   const productCards = document.querySelectorAll('.sec-4-card');
   let visibleCards = getVisibleCardValue();
@@ -36,6 +66,12 @@ document.addEventListener('DOMContentLoaded', function() {
         }, wait);
     };
   }
+
+  window.addEventListener('resize', debounce(() => {
+    visibleCards = getVisibleCardValue();
+    activeVisibleCards = visibleCards;
+    cardToOpen = visibleCards / 2;
+  }, 200));
 
   function showCards() {
     const remainingCards = productCards.length - activeVisibleCards;
@@ -70,12 +106,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
-  window.addEventListener('resize', debounce(() => {
-    visibleCards = getVisibleCardValue();
-    activeVisibleCards = visibleCards;
-    cardToOpen = visibleCards / 2;
-  }, 200));
-
   loadMoreProductCards.addEventListener('click', function() {
     if (activeVisibleCards < productCards.length) {
       showCards();
@@ -83,4 +113,35 @@ document.addEventListener('DOMContentLoaded', function() {
       hideCards();
     }
   });
+
+  // function isEmailValid(value) {
+  //   const emailValidateRegExp = /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu;
+    
+  //   return emailValidateRegExp.test(value);
+  // }
+
+  // (function() {
+  //   emailjs.init({
+  //     publicKey: "YOUR_PUBLIC_KEY",
+  //   });
+  // })();
+
+  // const formBtn = document.getElementById('form-submit');
+  // const emailField = document.getElementById('email-input');
+
+  // formBtn.addEventListener('click', function(event) {
+  //   event.preventDefault();
+
+  //   const currentEmail = emailField.value;
+  //   const isCurrentEmailValid = isEmailValid(currentEmail);
+
+  //   if (isCurrentEmailValid) {
+  //     emailjs.send("YOUR_SERVICE_ID","YOUR_TEMPLATE_ID",{
+  //       user_email: currentEmail,
+  //     });
+  //     emailField.value = ''; //clear form after submiting
+  //   } else {
+  //     console.log('Please type correct email adress!')
+  //   }
+  // })
 });
